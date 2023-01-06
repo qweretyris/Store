@@ -1,0 +1,19 @@
+<h1 class="text-center"><%= @category.name %></h1>
+
+
+<%= form_with url: filter_categories_url do |form| %>
+<p> Price: 
+  <%= form.text_field :title1 %>
+  <%= form.text_field :title2 %>
+  <%= form.submit %>
+</p>
+
+<% end %>
+
+
+
+<div>
+  <% @category.products.each do |product| %>
+    <%= link_to product.name, product %>
+  <% end %>
+</div>
