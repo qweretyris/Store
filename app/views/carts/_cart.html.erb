@@ -1,0 +1,24 @@
+<%= link_to product_path(cart.product), class: "text-decoration-none text-reset" do%>
+<div class="card mb-3" style="max-width: 600px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <%= image_tag cart.product.image.variant(resize_to_limit: [200, 200]) if cart.product.image.present? %>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text"><%= cart.product.name %></p>
+        <h5 class="card-title"><%= cart.product.price %>$</h5>
+
+        <small><%= link_to "Delete", cart_path(cart), data: {
+                  turbo_method: :delete,
+                  } %></small>
+      </div>
+    </div>
+  </div>
+</div>
+            <% end %>
+
+
+
+
+

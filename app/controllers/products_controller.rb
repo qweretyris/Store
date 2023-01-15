@@ -2,8 +2,9 @@ class ProductsController < ApplicationController
 	
 	def show
     @product = Product.find(params[:id])
+    @comments = @product.comments.page(params[:page])
 
-    @comment = @product.comments.new
+
 	end
 
 end

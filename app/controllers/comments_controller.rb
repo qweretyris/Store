@@ -1,28 +1,33 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :edit, :destroy]
+  before_action :authenticate_user!, only: [:create, :edit, :destroy, :update]
 
 	def create
-
     @product = Product.find(params[:product_id])
     @comment = @product.comments.create!(comment_params.merge(user_id: current_user.id))
-
-
     redirect_to product_path(@product)
 
   end
 
-  def show
+  def destroy
     @comment = Comment.find(params[:id])
-    # user_id = @comment.user_id
-    # @user = User.find(user_id)
-    @user = @comment.user
-  end
+    @product = Product.find(params[:product_id])
 
-  	def destroy
+    redirect_to product_path(@product)
 	end
 
+  def edit
+    @product = Product.find(params[:product_id])
+    @comment = Comment.find(params[:id])
 
-    def edit
+  end
+
+  def update
+    @product = Product.find(params[:product_id])
+    #@comment = Comment.find(params[:id])
+    @product.comments.find(params[:id]).update(comment_params)
+
+    redirect_to product_path(@product)
+
   end
 
 

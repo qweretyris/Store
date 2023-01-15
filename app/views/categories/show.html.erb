@@ -1,19 +1,21 @@
 <h1 class="text-center"><%= @category.name %></h1>
 
 
-<%= form_with url: filter_categories_url do |form| %>
-<p> Price: 
-  <%= form.text_field :title1 %>
-  <%= form.text_field :title2 %>
-  <%= form.submit %>
-</p>
+<%= render "filter" %>
 
-<% end %>
-
-
-
-<div>
-  <% @category.products.each do |product| %>
-    <%= link_to product.name, product %>
-  <% end %>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> Sort by </button>
+  <ul class="dropdown-menu">
+  <li><a><%= link_to "Newest", category_path(@category, order: 'new'), class:"dropdown-item" %> </a></li>
+  <li><a><%= link_to "Name", category_path(@category, order: 'name'), class:"dropdown-item" %> </a></li>
+  <li><a><%= link_to "Price: Low to high", category_path(@category, order: 'lower'), class:"dropdown-item" %> </a></li>
+  <li><a><%= link_to "Price: High to Low", category_path(@category, order: 'higher'), class:"dropdown-item" %> </a></li>
+</ul>
 </div>
+
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  <%= render @products %>
+</div>
+<%= paginate @products %>
+

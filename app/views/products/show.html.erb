@@ -1,18 +1,30 @@
-<h1><%= @product.name %></h1>
+<h2 class="text-center"><%= @product.name %></h2>
 
-<div class="container text-center">
+<div class="container">
   <div class="row">
-    <div class="col">
-      <%= image_tag @product.image %>
+    <div class="col col-5 border text-center d-flex flex-col">
+      <%= image_tag @product.image.variant(resize_to_limit: [500, 500]) if @product.image.present? %>
     </div>
-    <div class="col">
-      <p> Price: <%= @product.price %> $ </p>
-      <p> Description: <%= @product.description %> </p>
-      <p> Comments: </p>
-      <%= render @product.comments %>
+    <div class="col col-7 ">
+      <p class="row"> Description: <%= @product.description %> </p>
+      <p class="row"> Price: <%= @product.price %> $ </p>
+      <% unless current_user.present? %>
+      <%= link_to "Add to cart", @product, onclick: "alert('You must sign up or sign in.')", class:"btn btn-dark row" %> 
+      <% else %>
+      <%= link_to "Add to cart", add_to_cart_path(@product.id, current_user.id), data: {
+                    turbo_method: :post }, class:"btn btn-dark row" %>
+      <% end %>
+    </div>
+  </div>
 
-      <p>Add a comment:</p>
-      <%= render 'comments/form' %>
+  <div class="row">
+    <h4 class="text-center">Comments:</h4>
+    <%= render @comments %>
+
+    <%= paginate @comments %>
+
+    <div class="text-center">Add a comment:
+    <%= render 'comments/form', comment: @product.comments.new %>
     </div>
   </div>
 </div>

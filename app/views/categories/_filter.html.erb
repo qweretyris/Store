@@ -1,0 +1,9 @@
+<%= form_with url: filter_categories_url,  data: { turbo: false } do |form| %>
+<%= form.hidden_field :id, value: @category.id %>
+<p> Price: 
+  <%= form.text_field :min %>
+  <%= form.text_field :max %>
+  <%= form.submit %>
+</p>
+
+<% end %>
